@@ -1,5 +1,5 @@
 [package]
-name = "wheelOfFortune"
+name = "wheel_of_fortune"
 version = "0.1.0"
 authors = ["t-eckert <t_eckert@outlook.com>"]
 
