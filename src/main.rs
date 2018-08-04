@@ -1,4 +1,5 @@
 use std::io;
+use std::collections;
 
 struct Player {
     name: String,
@@ -15,11 +16,8 @@ fn main() {
 fn play_game() -> bool {
 
     print_intro_screen();
-
-    println!("How many players? ");
-    let mut num_players = String::new();
-    io::stdin().read_line(&mut num_players).expect("Failed to read line");
-
+    let players = build_players();
+    
     false
 }
 
@@ -27,10 +25,40 @@ fn print_intro_screen() {
     println!("Welcome to Wheel of Fortune!");
 }
 
-// fn spinWheel -> integer value of pts. (eventually a lose a turn result)
+fn build_players() -> Vec<Player> {
+    let num_players = get_number_of_players();
 
-// struct Player -> able to play the game
-// fn createPlayer -> initialize instance of Player
+    let mut players: Vec<Player> = Vec::new();
+
+    for i in 0..num_players {
+        let mut player_name = String::new();
+        println!("Player {}, what is your name?", i +1);
+        io::stdin().read_line(&mut player_name).expect("Failed to read line");
+
+        let player: Player = Player {
+            name: player_name,
+            points: 0,
+        };
+
+        players.push(player);
+    }
+
+    players
+}
+
+fn get_number_of_players() -> u32 {
+    println!("How many players? ");
+    let mut num_players = String::new();
+    io::stdin().read_line(&mut num_players).expect("Failed to read line");
+    let num_players: u32 = num_players.trim().parse().expect("Please type a number!");
+
+    // TASK: Limit to 3 players
+
+    num_players
+}
+
+
+// fn spinWheel -> integer value of pts. (eventually a lose a turn result)
 
 // fn getPhrase() returns a phrase from a JSON file
 
