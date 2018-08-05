@@ -1,5 +1,4 @@
 use std::io;
-use std::collections;
 
 struct Player {
     name: String,
@@ -56,7 +55,15 @@ impl Puzzle {
         // Prints the category and current state of puzzle.
 
         println!("\nThe category is {}", self.category);
-        println!("{}\n", self.current_puzzle_board);
+
+        let mut puzzle_board = Vec::new();
+        for character in self.current_puzzle_board.chars() {
+            puzzle_board.push(character);
+            puzzle_board.push(' ');
+        }
+
+        let puzzle_board_string: String = puzzle_board.into_iter().collect();
+        println!("{}\n", puzzle_board_string);
     }
 
     fn contains(&self, guess: String) -> bool {
