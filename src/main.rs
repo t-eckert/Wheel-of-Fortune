@@ -6,6 +6,15 @@ struct Player {
     points: i32,
 }
 
+impl Player {
+    fn new(name: String) -> Player {
+        Player {
+            name,
+            points: 0,
+        }
+    }
+}
+
 fn main() {
     let mut continue_playing = true;
     while continue_playing {
@@ -35,10 +44,7 @@ fn build_players() -> Vec<Player> {
         println!("Player {}, what is your name?", i +1);
         io::stdin().read_line(&mut player_name).expect("Failed to read line");
 
-        let player: Player = Player {
-            name: player_name,
-            points: 0,
-        };
+        let player = Player::new(player_name);
 
         players.push(player);
     }
