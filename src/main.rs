@@ -7,6 +7,10 @@ struct Player {
 }
 
 impl Player {
+    fn play(&self) {
+
+    }
+
     fn new(name: String) -> Player {
         Player {
             name,
@@ -25,7 +29,10 @@ fn main() {
 fn play_game() -> bool {
 
     print_intro_screen();
-    let players = build_players();
+    let players = build_players(get_number_of_players());
+    for player in players {
+        player.play();
+    }
     
     false
 }
@@ -34,12 +41,12 @@ fn print_intro_screen() {
     println!("Welcome to Wheel of Fortune!");
 }
 
-fn build_players() -> Vec<Player> {
-    let num_players = get_number_of_players();
+fn build_players(n: u32) -> Vec<Player> {
+    // instantiates n Player objects 
 
     let mut players: Vec<Player> = Vec::new();
 
-    for i in 0..num_players {
+    for i in 0..n {
         let mut player_name = String::new();
         println!("Player {}, what is your name?", i +1);
         io::stdin().read_line(&mut player_name).expect("Failed to read line");
@@ -53,6 +60,8 @@ fn build_players() -> Vec<Player> {
 }
 
 fn get_number_of_players() -> u32 {
+    // asks how many players are playing the game.
+
     println!("How many players? ");
     let mut num_players = String::new();
     io::stdin().read_line(&mut num_players).expect("Failed to read line");
