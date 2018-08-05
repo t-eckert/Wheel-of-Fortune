@@ -7,7 +7,18 @@ struct Player {
 }
 
 impl Player {
+    fn new(name: String) -> Player {
+        // Creates a new Player object with name, player starts with 0 points.
+
+        Player {
+            name,
+            points: 0,
+        }
+    }
+
     fn play(&self, mut puzzle: Puzzle) -> Puzzle {
+        // Player can guess a letter or phrase. If correct, updates puzzle_board object.
+
         println!("{}, guess a letter or the phrase: ", self.name.trim());
         let mut guess = String::new();
         io::stdin().read_line(&mut guess).expect("Failed to read line");
@@ -18,40 +29,39 @@ impl Player {
 
         puzzle
     }
-
-    fn new(name: String) -> Player {
-        Player {
-            name,
-            points: 0,
-        }
-    }
 }
 
 struct Puzzle {
     category: String,
     solution: String,
-    dashes: String,
+    current_puzzle_board: String,
 }
 
 impl Puzzle {
     fn new() -> Puzzle {
-        let category: String = "Fruit".to_string();
-        let solution: String = "APPLE".to_string();
-        let (dashes, solution) = get_dashes_from_(solution);
+        // Creates a new Puzzle object.
+
+        let category: String = String::from("Fruit");
+        let solution: String = String::from("APPLE");
+        let (current_puzzle_board, solution) = get_dashes_from_(solution);
 
         Puzzle {
             category,
             solution,
-            dashes,
+            current_puzzle_board,
         }
     }
 
     fn print(&self) {
-        println!("The category is {}", self.category);
-        println!("{}", self.dashes);
+        // Prints the category and current state of puzzle.
+
+        println!("\nThe category is {}", self.category);
+        println!("{}\n", self.current_puzzle_board);
     }
 
     fn contains(&self, guess: String) -> bool {
+        // Checks if the guess is single char or string and if correct.
+
         let trimmed_guess = guess.trim().to_string();
         
         if trimmed_guess.len() == 1 {
@@ -72,17 +82,17 @@ impl Puzzle {
 
     fn update(&mut self, guess: String) {
         let mut i: usize = 0;
-        let mut dashes_char_vec = Vec::new();
+        let mut current_puzzle_board_char_vec = Vec::new();
 
-        for character in self.dashes.chars() {
-            dashes_char_vec.push(character);
+        for character in self.current_puzzle_board.chars() {
+            current_puzzle_board_char_vec.push(character);
         }
 
         for guess_character in guess.chars() {
             i = 0;
             for solution_character in self.solution.chars() {
                 if guess_character == solution_character {
-                    dashes_char_vec[i] = guess_character;
+                    current_puzzle_board_char_vec[i] = guess_character;
                 }
                 i += 1;
             }
@@ -90,7 +100,7 @@ impl Puzzle {
     }
 
     fn solved(&self) -> bool {
-        self.dashes == self.solution
+        self.current_puzzle_board == self.solution
     }
 }
 
