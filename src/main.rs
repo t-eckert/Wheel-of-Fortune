@@ -19,6 +19,26 @@ impl Player {
     }
 }
 
+struct Puzzle {
+    category: String,
+    solution: String,
+    dashes: String,
+}
+
+impl Puzzle {
+    fn new() -> Puzzle {
+        let category: String = "Fruit".to_string();
+        let solution: String = "APPLE".to_string();
+        let (dashes, solution) = get_dashes_from_(solution);
+
+        Puzzle {
+            category,
+            solution,
+            dashes,
+        }
+    }
+}
+
 fn main() {
     let mut continue_playing = true;
     while continue_playing {
@@ -30,8 +50,9 @@ fn play_game() -> bool {
 
     print_intro_screen();
     let players = build_players(get_number_of_players());
+    let puzzle = Puzzle::new();
     for player in players {
-        player.play();
+
     }
     
     false
@@ -72,6 +93,22 @@ fn get_number_of_players() -> u32 {
     num_players
 }
 
+fn get_dashes_from_(solution: String) -> (String, String) {
+    let mut dashes_char_vec = vec![];
+
+    for character in solution.chars() {
+        if character == ' ' {
+            dashes_char_vec.push(' ');
+        }
+        else {
+            dashes_char_vec.push('_');
+        }
+    };
+
+    let dashes: String = dashes_char_vec.into_iter().collect();
+
+    (dashes, solution)
+}
 
 // fn spinWheel -> integer value of pts. (eventually a lose a turn result)
 
