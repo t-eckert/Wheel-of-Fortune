@@ -7,7 +7,7 @@ struct Player {
 }
 
 impl Player {
-    fn play(&self) {
+    fn play(&self, puzzle: Puzzle) {
 
     }
 
@@ -37,6 +37,15 @@ impl Puzzle {
             dashes,
         }
     }
+
+    fn print(&self) {
+        println!("The category is {}", self.category);
+        println!("{}", self.dashes);
+    }
+
+    fn check_guess(&self, guess: String) -> bool {
+        guess == self.solution
+    }
 }
 
 fn main() {
@@ -52,7 +61,7 @@ fn play_game() -> bool {
     let players = build_players(get_number_of_players());
     let puzzle = Puzzle::new();
     for player in players {
-
+        puzzle.print();
     }
     
     false
