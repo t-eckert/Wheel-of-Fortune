@@ -7,8 +7,16 @@ struct Player {
 }
 
 impl Player {
-    fn play(&self, puzzle: Puzzle) {
+    fn play(&self, mut puzzle: Puzzle) -> Puzzle {
+        println!("{}, guess a letter or the phrase: ", self.name.trim());
+        let mut guess = String::new();
+        io::stdin().read_line(&mut guess).expect("Failed to read line");
 
+        if puzzle.contains(guess.clone()) {
+            puzzle.update(guess);
+        }
+
+        puzzle
     }
 
     fn new(name: String) -> Player {
@@ -43,8 +51,46 @@ impl Puzzle {
         println!("{}", self.dashes);
     }
 
-    fn check_guess(&self, guess: String) -> bool {
+    fn contains(&self, guess: String) -> bool {
+        let trimmed_guess = guess.trim().to_string();
+        
+        if trimmed_guess.len() == 1 {
+            self.check_guess_char(guess.chars().next().unwrap())
+        }
+        else {
+            self.check_guess_string(trimmed_guess)
+        }
+    }
+
+    fn check_guess_string(&self, guess: String) -> bool {
         guess == self.solution
+    }
+
+    fn check_guess_char(&self, guess: char) -> bool {
+        self.solution.contains(guess)
+    }
+
+    fn update(&mut self, guess: String) {
+        let mut i: usize = 0;
+        let mut dashes_char_vec = Vec::new();
+
+        for character in self.dashes.chars() {
+            dashes_char_vec.push(character);
+        }
+
+        for guess_character in guess.chars() {
+            i = 0;
+            for solution_character in self.solution.chars() {
+                if guess_character == solution_character {
+                    dashes_char_vec[i] = guess_character;
+                }
+                i += 1;
+            }
+        }
+    }
+
+    fn solved(&self) -> bool {
+        self.dashes == self.solution
     }
 }
 
@@ -57,11 +103,19 @@ fn main() {
 
 fn play_game() -> bool {
 
+    let mut solved = false;
+
     print_intro_screen();
     let players = build_players(get_number_of_players());
-    let puzzle = Puzzle::new();
+    let mut puzzle = Puzzle::new();
+
     for player in players {
         puzzle.print();
+        puzzle = player.play(puzzle);
+        solved = puzzle.solved();
+        if solved {
+            break;
+        }
     }
     
     false
