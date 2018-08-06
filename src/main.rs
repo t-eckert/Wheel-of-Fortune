@@ -221,3 +221,6 @@ fn get_dashes_from_(solution: String) -> (String, String) {
 
 // fn getPhrase() returns a phrase from a JSON file
 
+// include reference to tests
+#[cfg(test)]
+mod test;
