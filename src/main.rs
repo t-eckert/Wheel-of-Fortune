@@ -29,6 +29,13 @@ impl Player {
         
         guess = guess.to_uppercase();
 
+        if puzzle.guesses.contains(&guess) {
+            println!("That has already been guessed.");
+        }
+        else {
+            puzzle.guesses.push(guess.clone());
+        }
+
         if puzzle.contains(guess.clone()) {
             puzzle.update(guess);
         }
