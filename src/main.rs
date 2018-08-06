@@ -1,11 +1,12 @@
+extern crate rand;
 use std::io;
-use std::collections;
+use rand::Rng;
+// use std::collections;
 
 struct Player {
     name: String,
     points: i32,
 }
-
 
 // associated functions
 impl Player {
@@ -23,7 +24,7 @@ impl Player {
     fn play(&self, mut puzzle: Puzzle) -> Puzzle {
         // Player can guess a letter or phrase. If correct, updates puzzle_board object.
 
-        println!("{}, guess a letter or the phrase: ", self.name);
+        println!("{}, you have {} points, guess a letter or the phrase: ", self.name,self.points);
         let mut guess = String::new();
         io::stdin().read_line(&mut guess).expect("Failed to read line");
         
@@ -215,6 +216,14 @@ fn get_dashes_from_(solution: String) -> (String, String) {
     let dashes: String = dashes_char_vec.into_iter().collect();
 
     (dashes, solution)
+}
+
+fn spin_wheel() -> i32 {
+    let mut rng = rand::thread_rng();
+    let wheel = vec![2500, 600, 700, 600, 650, 500, 700, 600, 550, 500, 600, 650, 700, 800, 500, 650, 500, 900];
+    let index = rng.gen_range(0, wheel.len());
+
+    wheel[index]
 }
 
 // fn spinWheel -> integer value of pts. (eventually a lose a turn result)
