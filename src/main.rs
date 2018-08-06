@@ -1,26 +1,33 @@
 use std::io;
+use std::collections;
 
 struct Player {
     name: String,
     points: i32,
 }
 
+
+// associated functions
 impl Player {
     fn new(name: String) -> Player {
         // Creates a new Player object with name, player starts with 0 points.
-
         Player {
-            name,
+            name: name.trim().to_string(),
             points: 0,
         }
     }
+}
 
+// methods
+impl Player {
     fn play(&self, mut puzzle: Puzzle) -> Puzzle {
         // Player can guess a letter or phrase. If correct, updates puzzle_board object.
 
-        println!("{}, guess a letter or the phrase: ", self.name.trim());
+        println!("{}, guess a letter or the phrase: ", self.name);
         let mut guess = String::new();
         io::stdin().read_line(&mut guess).expect("Failed to read line");
+        
+        guess = guess.to_uppercase();
 
         if puzzle.contains(guess.clone()) {
             puzzle.update(guess);
@@ -36,6 +43,7 @@ struct Puzzle {
     current_puzzle_board: String,
 }
 
+// associated functions
 impl Puzzle {
     fn new() -> Puzzle {
         // Creates a new Puzzle object.
@@ -50,7 +58,10 @@ impl Puzzle {
             current_puzzle_board,
         }
     }
+}
 
+// methods
+impl Puzzle {
     fn print(&self) {
         // Prints the category and current state of puzzle.
 
@@ -79,31 +90,38 @@ impl Puzzle {
         }
     }
 
-    fn check_guess_string(&self, guess: String) -> bool {
-        guess == self.solution
-    }
-
     fn check_guess_char(&self, guess: char) -> bool {
         self.solution.contains(guess)
     }
 
+    fn check_guess_string(&self, guess: String) -> bool {
+        guess == self.solution
+    }
+
     fn update(&mut self, guess: String) {
-        let mut i: usize = 0;
-        let mut current_puzzle_board_char_vec = Vec::new();
+        // TASK: This can be a lot cleaner. Probably a Rust matching way of doing this.
+        let mut char_indicies: Vec<char> = Vec::new();
+        let mut index: usize;
 
         for character in self.current_puzzle_board.chars() {
-            current_puzzle_board_char_vec.push(character);
+            char_indicies.push(character);
         }
 
-        for guess_character in guess.chars() {
-            i = 0;
+        for character in guess.trim().chars() {
+            index = 0;
             for solution_character in self.solution.chars() {
-                if guess_character == solution_character {
-                    current_puzzle_board_char_vec[i] = guess_character;
+                if character == solution_character {
+                    char_indicies[index] = character;
                 }
-                i += 1;
+                index += 1;
             }
+
+            // index = self.solution.chars().position(|c| c == character).unwrap();
+            // println!("{}", index);
+            // self.current_puzzle_board.replace_range(index..index+1, &character.to_string());
         }
+
+        self.current_puzzle_board = char_indicies.into_iter().collect();
     }
 
     fn solved(&self) -> bool {
@@ -120,7 +138,7 @@ fn main() {
 
 fn play_game() -> bool {
 
-    let mut solved = false;
+    let mut solved;
 
     print_intro_screen();
     let players = build_players(get_number_of_players());
