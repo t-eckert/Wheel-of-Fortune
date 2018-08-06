@@ -41,6 +41,7 @@ struct Puzzle {
     category: String,
     solution: String,
     current_puzzle_board: String,
+    guesses: Vec<String>,
 }
 
 // associated functions
@@ -51,11 +52,13 @@ impl Puzzle {
         let category: String = String::from("Fruit");
         let solution: String = String::from("APPLE");
         let (current_puzzle_board, solution) = get_dashes_from_(solution);
+        let guesses = Vec::new();
 
         Puzzle {
             category,
             solution,
             current_puzzle_board,
+            guesses,
         }
     }
 }
@@ -138,18 +141,17 @@ fn main() {
 
 fn play_game() -> bool {
 
-    let mut solved;
+    let mut solved = false;
 
     print_intro_screen();
     let players = build_players(get_number_of_players());
     let mut puzzle = Puzzle::new();
 
-    for player in players {
-        puzzle.print();
-        puzzle = player.play(puzzle);
-        solved = puzzle.solved();
-        if solved {
-            break;
+    while !solved {
+        for player in &players {
+            puzzle.print();
+            puzzle = player.play(puzzle);
+            solved = puzzle.solved();
         }
     }
     
