@@ -44,7 +44,6 @@ impl Game {
 impl Game {
 	pub fn play(&self) -> bool {
 		// Begins a new round, returns if a player wants to play again.
-		let mut puzzle: Puzzle = Puzzle::new();
 
 		let announcer: Announcer = Announcer::new(self.round);
 		let mut solved = false;
@@ -56,21 +55,21 @@ impl Game {
 
 		while !solved {
         	for player in &players {
-            	puzzle.print();
+            	self.puzzle.print();
             	guess = player.play();
 
-				if puzzle.guesses.contains(&guess) {
+				if self.puzzle.guesses.contains(&guess) {
             		println!("That has already been guessed.");
         		}
         		else {
-            		puzzle.guesses.push(guess.clone());
+            		self.puzzle.guesses.push(guess.clone());
         		}
 
-        		if puzzle.contains(guess.clone()) {
-            		puzzle.update(guess);
+        		if self.puzzle.contains(guess.clone()) {
+            		self.puzzle.update(guess);
         		}
 
-            	solved = puzzle.solved();
+            solved = self.puzzle.solved();
         	}
     	}
 
