@@ -1,14 +1,12 @@
 use super::*;
 #[test]
-fn test_player_creation() {
+fn test_game_creation() {
 	// arrange
-	let expected_name = String::from("Thomas");
-	let expected_points = 0;
+	test_round: u32 = 1;
 
 	// act
-	let test_player = Player::new("Thomas".to_string());
+	test_game: Game = Game::new(test_round);
 
 	// assert
-	assert_eq!(expected_name, test_player.name);
-	assert_eq!(expected_points, test_player.points);
+	assert_eq!(test_round, test_game.round);
 }
