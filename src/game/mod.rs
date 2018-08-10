@@ -23,10 +23,12 @@ pub struct Game {
 // initialization of Game
 impl Game {
 	pub fn new(round: u32) -> Game {
+		let players: Vec<Player> = init_players();
+
 		Game {
 			puzzle: Puzzle::new(),
 			round,
-			players: Vec::new(),
+			players,
 			announcer: Announcer::new(round),
 			wheel: Wheel::new(),
 		}
@@ -42,14 +44,14 @@ impl Game {
 
 		println!("{}", self.announcer.welcome);
 
-		let players: Vec<Player> = self.init_players();
 		let mut guess: String;
 
 		while !solved {
-        	for player in &players {
+        	for player in &self.players {
             	self.puzzle.print();
             	guess = player.play();
 
+				// Check if a guess has already been made.
 				if self.puzzle.guesses.contains(&guess) {
             		println!("That has already been guessed.");
         		}
@@ -57,18 +59,30 @@ impl Game {
             		self.puzzle.guesses.push(guess.clone());
         		}
 
+				// Update the puzzle. 
         		if self.puzzle.contains(guess.clone()) {
             		self.puzzle.update(guess);
         		}
 
-            solved = self.puzzle.solved();
+            	solved = self.puzzle.solved();
         	}
     	}
 
-		false
-	}
+		println!("Would you like to play again?");
+        let mut replay = String::new();
+        io::stdin().read_line(&mut replay).expect("Failed to read line");
 
-	fn init_players(&self) -> Vec<Player> {
+		if replay.chars().next().unwrap() == 'y' {
+			true
+		}
+		else {
+			false
+		}
+		
+	}
+}
+
+fn init_players() -> Vec<Player> {
 		let mut players: Vec<Player> = Vec::new();
 
 		println!("How many players? ");
@@ -88,4 +102,3 @@ impl Game {
 
     	players
 	}
-}
