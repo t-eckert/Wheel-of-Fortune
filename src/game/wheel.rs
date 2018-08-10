@@ -1,5 +1,5 @@
 extern crate rand;
-use rand::Rng;
+use self::rand::Rng;
 
 pub struct Wheel {
   

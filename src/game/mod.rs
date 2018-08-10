@@ -6,25 +6,17 @@ use self::puzzle::Puzzle;
 mod player;
 use self::player::Player;
 
+mod announcer;
+use self::announcer::Announcer;
+
 mod wheel;
 use self::wheel::Wheel;
-
-struct Announcer {
-	welcome: String
-}
-
-impl Announcer {
-	fn new(round: u32) -> Announcer {
-		Announcer {
-			welcome : format!("Welcome to Wheel of Fortune! Round {}", round),
-		}
-	}
-}
 
 pub struct Game {
 	puzzle: Puzzle,
 	round: u32,
 	players: Vec<Player>,
+	announcer: Announcer,
 	wheel: Wheel,
 }
 
@@ -35,6 +27,7 @@ impl Game {
 			puzzle: Puzzle::new(),
 			round,
 			players: Vec::new(),
+			announcer: Announcer::new(round),
 			wheel: Wheel::new(),
 		}
 	}
@@ -42,13 +35,12 @@ impl Game {
 
 // Game functions
 impl Game {
-	pub fn play(&self) -> bool {
+	pub fn play(&mut self) -> bool {
 		// Begins a new round, returns if a player wants to play again.
 
-		let announcer: Announcer = Announcer::new(self.round);
 		let mut solved = false;
 
-		println!("{}", announcer.welcome);
+		println!("{}", self.announcer.welcome);
 
 		let players: Vec<Player> = self.init_players();
 		let mut guess: String;

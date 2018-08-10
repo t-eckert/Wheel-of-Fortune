@@ -9,7 +9,7 @@ fn main() {
     let mut round = 1;
 
     while another_round {
-        let game = Game::new(round);
+        let mut game = Game::new(round);
         another_round = game.play();
         round += 1;
     }
