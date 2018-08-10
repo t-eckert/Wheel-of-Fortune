@@ -1,5 +1,4 @@
 
-
 pub struct Puzzle {
     category: String,
     solution: String,
@@ -7,13 +6,15 @@ pub struct Puzzle {
     pub guesses: Vec<String>,
 }
 
+fn get_puzzle() -> (String, String) {
+    (String::from("Fruit"), String::from("APPLE"))
+}
+
 // associated functions
 impl Puzzle {
     pub fn new() -> Puzzle {
         // Creates a new Puzzle object.
-
-        let category: String = String::from("Fruit");
-        let solution: String = String::from("APPLE");
+        let (category, solution) = get_puzzle();
         let (current_puzzle_board, solution) = get_dashes_from_(solution);
         let guesses = Vec::new();
 
