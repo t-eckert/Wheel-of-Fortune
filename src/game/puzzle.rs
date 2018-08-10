@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 
 pub struct Puzzle {
     category: String,
@@ -7,7 +8,11 @@ pub struct Puzzle {
 }
 
 fn get_puzzle() -> (String, String) {
-    (String::from("Fruit"), String::from("APPLE"))
+    let puzzles: HashMap<&str, Vec<&str>> = [
+        ("Fruit", vec!["APPLE","PEACH"]),
+        ].iter().cloned().collect();
+
+    (String::from("Fruit"), String::from(puzzles["Fruit"][1]))
 }
 
 // associated functions
