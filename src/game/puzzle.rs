@@ -10,9 +10,10 @@ pub struct Puzzle {
 fn get_puzzle() -> (String, String) {
     let puzzles: HashMap<&str, Vec<&str>> = [
         ("Fruit", vec!["APPLE","PEACH"]),
+        ("Phrases", vec!["THREES A CROWD."])
         ].iter().cloned().collect();
 
-    (String::from("Fruit"), String::from(puzzles["Fruit"][1]))
+    (String::from("Fruit"), String::from(puzzles["Phrases"][0]))
 }
 
 // associated functions
@@ -111,6 +112,9 @@ fn get_dashes_from_(solution: String) -> (String, String) {
     for character in solution.chars() {
         if character == ' ' {
             dashes_char_vec.push(' ');
+        }
+        else if character == '.' {
+            dashes_char_vec.push('.');
         }
         else {
             dashes_char_vec.push('_');
