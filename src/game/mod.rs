@@ -9,15 +9,22 @@ use self::player::Player;
 mod announcer;
 use self::announcer::Announcer;
 
-mod wheel;
-use self::wheel::Wheel;
+extern crate rand;
+use self::rand::Rng;
+
+fn spin_wheel() -> i32 {
+    let mut rng = rand::thread_rng();
+    let wheel = vec![2500, 600, 700, 600, 650, 500, 700, 600, 550, 500, 600, 650, 700, 800, 500, 650, 500, 900];
+    let index = rng.gen_range(0, wheel.len());
+
+    wheel[index]
+}
 
 pub struct Game {
 	puzzle: Puzzle,
 	round: u32,
 	players: Vec<Player>,
 	announcer: Announcer,
-	wheel: Wheel,
 }
 
 // initialization of Game
@@ -30,7 +37,6 @@ impl Game {
 			round,
 			players,
 			announcer: Announcer::new(round),
-			wheel: Wheel::new(),
 		}
 	}
 }
@@ -48,6 +54,10 @@ impl Game {
 
 		while !solved {
         	for player in &self.players {
+
+				println!("Spin!");
+        		println!("The wheel lands on ${}!", spin_wheel());
+
             	self.puzzle.print();
             	guess = player.play();
 

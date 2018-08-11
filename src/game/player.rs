@@ -1,5 +1,6 @@
 use std::io;
 
+
 pub struct Player {
     name: String,
 	points: i32,
@@ -22,10 +23,6 @@ impl Player {
         // Player can guess a letter or phrase. If correct, updates puzzle_board object.
 
         // let mut money_earned = 0;
-
-        println!("Spin!");
-        // let wheel_value = spin_wheel();
-        // println!("The wheel lands on ${}!", wheel_value);
         println!("{}, you have {} points, guess a letter or the phrase: ", self.name,self.points);
         let mut guess = String::new();
         io::stdin().read_line(&mut guess).expect("Failed to read line");
