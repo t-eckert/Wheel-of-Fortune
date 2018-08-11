@@ -24,18 +24,20 @@ pub struct Game {
 	puzzle: Puzzle,
 	round: u32,
 	players: Vec<Player>,
+	num_players: usize,
 	announcer: Announcer,
 }
 
 // initialization of Game
 impl Game {
 	pub fn new(round: u32) -> Game {
-		let players: Vec<Player> = init_players();
+		let (players, num_players) = init_players();
 
 		Game {
 			puzzle: Puzzle::new(),
 			round,
 			players,
+			num_players,
 			announcer: Announcer::new(round),
 		}
 	}
@@ -48,15 +50,18 @@ impl Game {
 
 		let mut solved = false;
 
-		println!("{}", self.announcer.welcome);
+		println!("{}", self.announcer.welcome.to_string());
 
 		let mut guess: String;
 
 		while !solved {
-        	for player in &self.players {
+        	for i in 0..self.num_players {
+				let ref mut player = self.players[i];
 
 				println!("Spin!");
-        		println!("The wheel lands on ${}!", spin_wheel());
+
+				let wheel_panel = spin_wheel();
+        		println!("The wheel lands on ${}!", wheel_panel);
 
             	self.puzzle.print();
             	guess = player.play();
@@ -69,10 +74,13 @@ impl Game {
             		self.puzzle.guesses.push(guess.clone());
         		}
 
+				let mut number_in: i32 = 0;
 				// Update the puzzle. 
         		if self.puzzle.contains(guess.clone()) {
-            		self.puzzle.update(guess);
+            		number_in = self.puzzle.update(guess);
         		}
+
+				player.add_winnings(number_in * wheel_panel);
 
             	solved = self.puzzle.solved();
         	}
@@ -92,13 +100,13 @@ impl Game {
 	}
 }
 
-fn init_players() -> Vec<Player> {
+fn init_players() -> (Vec<Player>, usize) {
 		let mut players: Vec<Player> = Vec::new();
 
 		println!("How many players? ");
     	let mut num_players = String::new();
 		io::stdin().read_line(&mut num_players).expect("Failed to read line");
-		let num_players: u32 = num_players.trim().parse().expect("Please type a number!");
+		let num_players: usize = num_players.trim().parse().expect("Please type a number!");
 
 		for i in 0..num_players {
         	let mut player_name = String::new();
@@ -110,5 +118,5 @@ fn init_players() -> Vec<Player> {
         	players.push(player);
     	}
 
-    	players
+    	(players, num_players)
 	}
