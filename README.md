@@ -1,4 +1,4 @@
-# Wheel of Fortune
+# Wheel of Fortune [![Build Status](https://travis-ci.com/t-eckert/Wheel-of-Fortune.svg?branch=master)](https://travis-ci.com/t-eckert/Wheel-of-Fortune)
 
 A Project for Learning Rust.  
 
