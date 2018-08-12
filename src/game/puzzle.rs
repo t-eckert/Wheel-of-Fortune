@@ -17,18 +17,20 @@ fn get_puzzle() -> (String, String) {
         .cloned()
         .collect();
 
+    let mut rng = rand::thread_rng();
+
     let mut categories: Vec<&str> = Vec::new();
     for key in puzzles.keys() {
         categories.push(key);
     }
-    let category_n = rand::thread_rng().gen_range(0, categories.len());
+    let category_n = rng.gen_range(0, categories.len());
     let category = categories[category_n];
 
     let mut solutions: Vec<&str> = Vec::new();
     for val in &puzzles[category] {
         solutions.push(val);
     }
-    let solution_n = rand::thread_rng().gen_range(0, solutions.len());
+    let solution_n = rng.gen_range(0, solutions.len());
     let solution = solutions[solution_n];
 
     (String::from(category), String::from(solution))
