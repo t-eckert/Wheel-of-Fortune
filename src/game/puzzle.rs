@@ -11,19 +11,21 @@ pub struct Puzzle {
 
 fn get_puzzle() -> (String, String) {
     let puzzles: HashMap<&str, Vec<&str>> = [
-        ("Fruit", vec!["APPLE","PEACH"]),
-        ("Phrases", vec!["THREES A CROWD."])
-        ].iter().cloned().collect();
+        ("Fruit", vec!["APPLE", "PEACH"]),
+        ("Phrases", vec!["THREES A CROWD."]),
+    ].iter()
+        .cloned()
+        .collect();
 
     let mut categories: Vec<&str> = Vec::new();
-    for key in puzzles.keys() { 
+    for key in puzzles.keys() {
         categories.push(key);
     }
     let category_n = rand::thread_rng().gen_range(0, categories.len());
     let category = categories[category_n];
 
     let mut solutions: Vec<&str> = Vec::new();
-    for val in &puzzles[category] { 
+    for val in &puzzles[category] {
         solutions.push(val);
     }
     let solution_n = rand::thread_rng().gen_range(0, solutions.len());
@@ -70,11 +72,10 @@ impl Puzzle {
         // Checks if the guess is single char or string and if correct.
 
         let trimmed_guess = guess.trim().to_string();
-        
+
         if trimmed_guess.len() == 1 {
             self.check_guess_char(guess.chars().next().unwrap())
-        }
-        else {
+        } else {
             self.check_guess_string(trimmed_guess)
         }
     }
@@ -128,14 +129,12 @@ fn get_dashes_from_(solution: String) -> (String, String) {
     for character in solution.chars() {
         if character == ' ' {
             dashes_char_vec.push(' ');
-        }
-        else if character == '.' {
+        } else if character == '.' {
             dashes_char_vec.push('.');
-        }
-        else {
+        } else {
             dashes_char_vec.push('_');
         }
-    };
+    }
 
     let dashes: String = dashes_char_vec.into_iter().collect();
 

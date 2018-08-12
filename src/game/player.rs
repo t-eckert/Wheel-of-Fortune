@@ -1,9 +1,8 @@
 use std::io;
 
-
 pub struct Player {
     name: String,
-	money: i32,
+    money: i32,
 }
 
 // associated functions
@@ -23,10 +22,15 @@ impl Player {
         // Player can guess a letter or phrase. If correct, updates puzzle_board object.
 
         // let mut money_earned = 0;
-        println!("{}, you have {} points, guess a letter or the phrase: ", self.name, self.money);
+        println!(
+            "{}, you have {} points, guess a letter or the phrase: ",
+            self.name, self.money
+        );
         let mut guess = String::new();
-        io::stdin().read_line(&mut guess).expect("Failed to read line");
-        
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
+
         guess = guess.to_uppercase();
 
         guess
@@ -36,7 +40,7 @@ impl Player {
         println!("{} you now have ${}", self.name, self.money);
     }
 
-    pub fn add_winnings(&mut self, winnings: i32) { 
+    pub fn add_winnings(&mut self, winnings: i32) {
         self.money = self.money + winnings;
         self.print_points();
     }

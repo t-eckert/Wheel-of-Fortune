@@ -1,5 +1,3 @@
 use super::*;
 #[test]
-fn test_player_creation() {
-
-}
+fn test_player_creation() {}

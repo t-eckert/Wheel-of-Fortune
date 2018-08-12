@@ -1,6 +1,7 @@
 # Wheel of Fortune [![Build Status](https://travis-ci.com/t-eckert/Wheel-of-Fortune.svg?branch=master)](https://travis-ci.com/t-eckert/Wheel-of-Fortune)
 
 A Project for Learning Rust.  
+Formatted using [Rustfmt](https://github.com/rust-lang-nursery/rustfmt).  
 
 ## How to Run  
 
