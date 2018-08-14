@@ -31,7 +31,7 @@ fn get_puzzle() -> (String, String) {
     }
     let solution = rng.choose(&solutions).unwrap();
 
-    (String::from(category), String::from(solution))
+    (String::from(*category), String::from(*solution))
 }
 
 // associated functions
@@ -68,7 +68,7 @@ impl Puzzle {
         println!("{}\n", puzzle_board_string);
     }
 
-    pub fn contains(&self, guess: String) -> bool {
+    pub fn contains(&self, guess: &str) -> bool {
         // Checks if the guess is single char or string and if correct.
 
         let trimmed_guess = guess.trim().to_string();
