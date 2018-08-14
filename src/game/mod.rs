@@ -49,19 +49,15 @@ impl Game {
 
         println!("{}", self.announcer.welcome);
 
-        let mut guess: String;
-
         while !solved {
-            for i in 0..self.players.len() {
-                let ref mut player = self.players[i];
-
+            for player in &mut self.players {
                 println!("Spin!");
 
                 let wheel_panel = spin_wheel();
                 println!("The wheel lands on ${}!", wheel_panel);
 
                 self.puzzle.print();
-                guess = player.play();
+                let guess = player.play();
 
                 // Check if a guess has already been made.
                 if self.puzzle.guesses.contains(&guess) {
@@ -71,9 +67,10 @@ impl Game {
                 }
 
                 let mut number_in: i32 = 0;
+
                 // Update the puzzle.
                 if self.puzzle.contains(&guess) {
-                    number_in = self.puzzle.update(guess);
+                    number_in = self.puzzle.update(&guess);
                 }
 
                 player.add_winnings(number_in * wheel_panel);

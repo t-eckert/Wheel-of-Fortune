@@ -88,7 +88,7 @@ impl Puzzle {
         guess == self.solution
     }
 
-    pub fn update(&mut self, guess: String) -> i32 {
+    pub fn update(&mut self, guess: &str) -> i32 {
         // TASK: This can be a lot cleaner. Probably a Rust matching way of doing this.
         let mut char_indicies: Vec<char> = Vec::new();
         let mut index: usize;
