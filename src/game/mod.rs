@@ -74,7 +74,7 @@ impl Game {
 
                 let mut number_in: i32 = 0;
                 // Update the puzzle.
-                if self.puzzle.contains(guess.clone()) {
+                if self.puzzle.contains(&guess) {
                     number_in = self.puzzle.update(guess);
                 }
 
