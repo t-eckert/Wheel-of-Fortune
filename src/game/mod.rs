@@ -47,7 +47,7 @@ impl Game {
 
         let mut solved = false;
 
-        println!("{}", self.announcer.welcome.to_string());
+        println!("{}", self.announcer.welcome);
 
         let mut guess: String;
 
