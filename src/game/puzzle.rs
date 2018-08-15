@@ -31,7 +31,7 @@ impl Puzzle {
     pub fn new() -> Puzzle {
         // Creates a new Puzzle object.
         let (category, solution) = get_puzzle();
-        let (current_puzzle_board, solution) = get_dashes_from(solution);
+        let current_puzzle_board = get_dashes_from(&solution);
         let guesses = Vec::new();
 
         Puzzle {
@@ -106,20 +106,13 @@ impl Puzzle {
     }
 }
 
-fn get_dashes_from(solution: String) -> (String, String) {
-    let mut dashes_char = String::new();
-
-    for character in solution.chars() {
-        if character.is_alphabetic() {
-            dashes_char.push('_');
-        }
-        else if character == '.' {
-            dashes_char.push('.');
-        }
-        else {
-            dashes_char.push(' ');
-        } 
-    }
-
-    (dashes_char, solution)
+fn get_dashes_from(solution: &str) -> String {
+    solution.chars()
+        .map(|c|
+            match c {
+                ' ' | '.' => c,
+                _ => '_'
+            }
+        )
+        .collect()
 }
