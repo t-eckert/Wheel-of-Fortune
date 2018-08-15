@@ -79,21 +79,16 @@ impl Puzzle {
 
     pub fn update(&mut self, guess: &str) -> i32 {
         // TASK: This can be a lot cleaner. Probably a Rust matching way of doing this.
-        let mut char_indicies: Vec<char> = Vec::new();
         let mut num_in_solution: i32 = 0;
 
-        for character in self.current_puzzle_board.chars() {
-            char_indicies.push(character);
-        }
+        let mut char_indicies: Vec<char> = self.current_puzzle_board.chars().collect();
 
         for character in guess.trim().chars() {
-            let mut index = 0;
-            for solution_character in self.solution.chars() {
+            for (solution_character, indices_character) in self.solution.chars().zip(char_indicies.iter_mut()) {
                 if character == solution_character {
-                    char_indicies[index] = character;
+                    *indices_character = character;
                     num_in_solution += 1;
                 }
-                index += 1;
             }
 
             // index = self.solution.chars().position(|c| c == character).unwrap();
