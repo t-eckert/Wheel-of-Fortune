@@ -21,9 +21,7 @@ fn get_puzzle() -> (String, String) {
 
     let categories: Vec<&str> = puzzles.keys().cloned().collect();
     let category = rng.choose(&categories).unwrap();
-
     let solution = rng.choose(&puzzles[category]).unwrap();
-
 
     (String::from(*category), String::from(*solution))
 }
@@ -52,14 +50,13 @@ impl Puzzle {
 
         println!("\nThe category is {}", self.category);
 
-        let mut puzzle_board = Vec::new();
+        let mut puzzle_board = String::with_capacity(self.current_puzzle_board.len()*2);
         for character in self.current_puzzle_board.chars() {
             puzzle_board.push(character);
             puzzle_board.push(' ');
         }
 
-        let puzzle_board_string: String = puzzle_board.into_iter().collect();
-        println!("{}\n", puzzle_board_string);
+        println!("{}\n", puzzle_board);
     }
 
     pub fn contains(&self, guess: &str) -> bool {
@@ -118,21 +115,19 @@ impl Puzzle {
 }
 
 fn get_dashes_from(solution: String) -> (String, String) {
-    let mut dashes_char_vec = vec![];
+    let mut dashes_char = String::new();
 
     for character in solution.chars() {
         if character.is_alphabetic() {
-            dashes_char_vec.push('_');
+            dashes_char.push('_');
         }
         else if character == '.' {
-            dashes_char_vec.push('.');
+            dashes_char.push('.');
         }
         else {
-            dashes_char_vec.push(' ');
+            dashes_char.push(' ');
         } 
     }
 
-    let dashes: String = dashes_char_vec.into_iter().collect();
-
-    (dashes, solution)
+    (dashes_char, solution)
 }
