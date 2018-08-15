@@ -50,13 +50,11 @@ impl Puzzle {
 
         println!("\nThe category is {}", self.category);
 
-        let mut puzzle_board = String::with_capacity(self.current_puzzle_board.len()*2);
         for character in self.current_puzzle_board.chars() {
-            puzzle_board.push(character);
-            puzzle_board.push(' ');
+            println!("{}", character)
         }
 
-        println!("{}\n", puzzle_board);
+        println!();
     }
 
     pub fn contains(&self, guess: &str) -> bool {
