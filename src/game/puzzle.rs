@@ -22,11 +22,8 @@ fn get_puzzle() -> (String, String) {
     let categories: Vec<&str> = puzzles.keys().cloned().collect();
     let category = rng.choose(&categories).unwrap();
 
-    let mut solutions: Vec<&str> = Vec::new();
-    for val in &puzzles[category] {
-        solutions.push(val);
-    }
-    let solution = rng.choose(&solutions).unwrap();
+    let solution = rng.choose(&puzzles[category]).unwrap();
+
 
     (String::from(*category), String::from(*solution))
 }
