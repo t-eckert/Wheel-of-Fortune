@@ -18,4 +18,6 @@ If you want to use this code to learn Rust yourself or just enjoy word games. Yo
 
 As I am learning Rust, I would hugely appreciate anyone willing to review this code. I would especially like to improve on both writing Rust idiomatically and using naming conventions that self-document the code.  
 
+A huge thank you to [Stuart Haidon](https://github.com/Measter)
+
 
