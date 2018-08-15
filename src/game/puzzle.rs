@@ -60,7 +60,7 @@ impl Puzzle {
     pub fn contains(&self, guess: &str) -> bool {
         // Checks if the guess is single char or string and if correct.
 
-        let trimmed_guess = guess.trim().to_string();
+        let trimmed_guess = guess.trim();
 
         if trimmed_guess.len() == 1 {
             self.check_guess_char(guess.chars().next().unwrap())
@@ -73,14 +73,13 @@ impl Puzzle {
         self.solution.contains(guess)
     }
 
-    fn check_guess_string(&self, guess: String) -> bool {
+    fn check_guess_string(&self, guess: &str) -> bool {
         guess == self.solution
     }
 
     pub fn update(&mut self, guess: &str) -> i32 {
         // TASK: This can be a lot cleaner. Probably a Rust matching way of doing this.
         let mut char_indicies: Vec<char> = Vec::new();
-        let mut index: usize;
         let mut num_in_solution: i32 = 0;
 
         for character in self.current_puzzle_board.chars() {
@@ -88,7 +87,7 @@ impl Puzzle {
         }
 
         for character in guess.trim().chars() {
-            index = 0;
+            let mut index = 0;
             for solution_character in self.solution.chars() {
                 if character == solution_character {
                     char_indicies[index] = character;
