@@ -19,10 +19,7 @@ fn get_puzzle() -> (String, String) {
 
     let mut rng = rand::thread_rng();
 
-    let mut categories: Vec<&str> = Vec::new();
-    for key in puzzles.keys() {
-        categories.push(key);
-    }
+    let categories: Vec<&str> = puzzles.keys().cloned().collect();
     let category = rng.choose(&categories).unwrap();
 
     let mut solutions: Vec<&str> = Vec::new();
