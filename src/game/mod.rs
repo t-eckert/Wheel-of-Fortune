@@ -66,12 +66,11 @@ impl Game {
                     self.puzzle.guesses.push(guess.clone());
                 }
 
-                let mut number_in: i32 = 0;
-
-                // Update the puzzle.
-                if self.puzzle.contains(&guess) {
-                    number_in = self.puzzle.update(&guess);
-                }
+                let number_in = if self.puzzle.contains(&guess) {
+                    self.puzzle.update(&guess)
+                } else {
+                    0
+                };
 
                 player.add_winnings(number_in * wheel_panel);
 
